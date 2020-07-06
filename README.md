@@ -48,7 +48,7 @@ docker images  # Show all images
 ```
 docker run -it <image_name> /bin/bash
 ```
-**Example**
+Example
 ```
 docker run -it ubuntu
 ```
@@ -74,7 +74,7 @@ docker run --gpus '"device=0,1,2,3"' -it <image_name> /bin/bash  # Run 4 GPU id=
 ```
 docker run -v <system_directory>:<container_directory> ...
 ```
-**Example**
+Example
 ```
 docker run -it -v /home/yoongi/Projects:/data pytorch/pytorch:latest /bin/bash
 ```
@@ -83,7 +83,7 @@ docker run -it -v /home/yoongi/Projects:/data pytorch/pytorch:latest /bin/bash
 ```
 docker -p <system_port>:<container_port> ...
 ```
-**Example**
+Example
 ```
 docker run -it -p 5555:5555 -p 5556:5556 --gpus 1 yoongicomcomai/bert-as-service-base:latest /bin/bash
 ```
