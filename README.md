@@ -13,6 +13,27 @@ docker build -t simple-app .
 docker run -it -p 5000:5000 simple-app
 ```
 
+# Installing Docker on Ubuntu
+```
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+sudo apt-get update
+sudo apt-get install docker-ce
+sudo usermod -aG docker $USER
+```
+## Installing nvidia-docker
+```
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
+curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | \
+sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+
+sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
+sudo systemctl restart docker
+```
 
 # Essential Commands
 ## Preparing Image
@@ -26,6 +47,10 @@ docker images  # Show all images
 **Running shell directly. Check <image_name> from ```docker images```**
 ```
 docker run -it <image_name> /bin/bash
+```
+**Example**
+```
+docker run -it ubuntu
 ```
 
 ### Running shell background daemon
@@ -63,7 +88,7 @@ docker -p <system_port>:<container_port> ...
 docker run -it -p 5555:5555 -p 5556:5556 --gpus 1 yoongicomcomai/bert-as-service-base:latest /bin/bash
 ```
 
-### Using GUI programs such as opencv::imshow()
+### Using GUI programs such as cv2.imshow()
 ```
 xhost +local:docker
 docker run -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e QT_X11_NO_MITSHM=1
