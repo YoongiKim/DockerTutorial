@@ -228,10 +228,10 @@ docker commit e0bbebd22254 simple-app:latest
 ```
 docker stop e0bbebd22254
 ```
-#### 7-5. Re-Run with 5555 port opened
+#### 7-5. Re-Run with 5000 port opened
 ```
 # -p outside_port:inside_port
-docker run -it -p 5555:5555 simple-app:latest /bin/bash
+docker run -it -p 5000:5000 simple-app:latest /bin/bash
 ```
 
 #### 7-6. Test web site again
