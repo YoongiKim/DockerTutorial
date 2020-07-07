@@ -135,3 +135,41 @@ docker rmi <image_id>
 docker build -t <image_name> <path to directory containing Dockerfile>
 ```
 
+# How to make Dockerfile
+### Example of Dockerfile
+https://github.com/Laeyoung/Zooming-Slow-Mo-CVPR-2020/blob/master/Dockerfile
+```
+# 1. base image
+FROM pytorch/pytorch:1.1.0-cuda10.0-cudnn7.5-devel
+
+# 2. apt install
+# Each time RUN docker creates intermediate container. Use '\' to coninuously run commands.
+RUN apt update && \
+  apt install -y git wget ffmpeg libsm6 libxext6 libxrender-dev libglib2.0-0
+
+# 3. pip install
+COPY ./pip.conf ~/.pip/pip.conf
+RUN pip install numpy opencv-python lmdb pyyaml pickle5 matplotlib seaborn
+
+# 4. install flask and expose 80 port
+RUN pip install flask Flask-Limiter
+EXPOSE 80
+
+# 5. download pre-trained model
+RUN mkdir /app
+WORKDIR /app
+RUN wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1xeOoZclGeSI1urY6mVCcApfCqOPgxMBK' -O model.pth
+
+# 6. copy codes
+COPY . .
+
+# 7. set ENTRYPOINT and CMD
+ENTRYPOINT bash /app/entrypoint.sh
+CMD []
+```
+```
+docker build -t <yoongi/zooming-slow-mo:latest> ./Dockerfile
+```
+
+### Dockerfile commands (FROM, RUN, WORKDIR, CMD, ...)
+https://rampart81.github.io/post/dockerfile_instructions/
