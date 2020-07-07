@@ -254,6 +254,8 @@ docker pull yoongicomcomai/simple-app:latest
 
 ### 10. Dockerfile making
 If you want to make Dockerfile what we've done
+
+Create file named ```Dockerfile``` and type
 ```
 FROM python:3.8.3-slim
 RUN apt update && \
