@@ -267,5 +267,5 @@ CMD ["app.py"]
 ```
 ```
 docker build -t simple-flask-app .
-docker run -it simple-flask-app
+docker run -it -p 5000:5000 simple-flask-app
 ```
