@@ -178,7 +178,7 @@ https://rampart81.github.io/post/dockerfile_instructions/
 # Example Situation (Flask app)
 ### 1. Pull python3 docker image
 ```
-docker pull python/python:3.8.3-slim
+docker pull python:3.8.3-slim
 ```
 ### 2. Run docker image
 ```
@@ -253,3 +253,19 @@ docker pull yoongicomcomai/simple-app:latest
 ```
 
 ### 10. Dockerfile making
+If you want to make Dockerfile what we've done
+```
+FROM python:3.8.3-slim
+RUN apt update && \
+    apt -y install git && \
+    git clone https://github.com/YoongiKim/DockerTutorial.git && \
+    pip install flask
+EXPOSE 5000
+WORKDIR /DockerTutorial
+ENTRYPOINT ["python"]
+CMD ["app.py"]
+```
+```
+docker build -t simple-flask-app .
+docker run -it simple-flask-app
+```
