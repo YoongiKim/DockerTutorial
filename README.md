@@ -173,3 +173,83 @@ docker build -t <yoongi/zooming-slow-mo:latest> ./Dockerfile
 
 ### Dockerfile commands (FROM, RUN, WORKDIR, CMD, ...)
 https://rampart81.github.io/post/dockerfile_instructions/
+
+
+# Example Situation (Flask app)
+### 1. Pull python3 docker image
+```
+docker pull python/python:3.8.3-slim
+```
+### 2. Run docker image
+```
+docker run -it python/python:3.8.3-slim /bin/bash
+```
+### 3. Install git & clone repository
+```
+apt update
+apt install git
+git clone https://github.com/YoongiKim/DockerTutorial.git
+cd DockerTutorial/
+ls -al
+```
+### 4. Install Flask by pip
+```
+pip install flask
+```
+### 5. Run Flask app
+```
+python app.py
+```
+### 6. Test web page
+Connect web-browser to 127.0.0.1:5000
+(It won't connect)
+### 7. Expose port 5000
+We didn't opened port 5000. So we should save, stop, re-run with `-p 5000:5000` option
+#### 7-1. Exit without stopping container.
+If we just exit we will lose changes. So press key CTRL+P + CTRL+Q
+```
+<CTRL+P> + <CTRL+Q>
+```
+#### 7-2. Show running containers
+```
+docker ps
+```
+Then it will show you running containers
+```
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+e0bbebd22254        python:3.8.3-slim   "/bin/bash"              7 minutes ago       Up 7 minutes                            blissful_borg
+```
+#### 7-3. Save changes
+```
+# docker commit <CONTAINER ID> <NEW IMAGE NAME>
+docker commit e0bbebd22254 simple-app:latest
+```
+#### 7-4. Stop running container
+```
+docker stop e0bbebd22254
+```
+#### 7-5. Re-Run with 5555 port opened
+```
+# -p outside_port:inside_port
+docker run -it -p 5555:5555 simple-app:latest /bin/bash
+```
+
+#### 7-6. Test web site again
+Connect web-browser to 127.0.0.1:5000
+
+### 8. Push
+Now we can upload our own image to docker hub.
+```
+docker images
+docker tag simple-app:latest yoongicomcomai/simple-app:latest
+docker login
+docker push yoongicomcomai/simple-app:latest
+```
+
+### 9. Pull
+Later we can download our image
+```
+docker pull yoongicomcomai/simple-app:latest
+```
+
+### 10. Dockerfile making
